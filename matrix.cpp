@@ -179,7 +179,6 @@ void matrix::dispMat(){
 
 matrix* ref(matrix* mat){ //makes a copy of a matrix in reduced row echelon form, will return original matrix if matrix is already in rref. Algorithm will be Gaussian elimination
 
-    //std::cout << "CHECK1" << std::endl;
     matrix* rmat = new matrix(mat -> getM(), mat -> getN());
     
     for(int i = 1; i <= rmat->getM(); i++){
@@ -189,7 +188,6 @@ matrix* ref(matrix* mat){ //makes a copy of a matrix in reduced row echelon form
     }
     
     //Now to reduce rmat
-   // std::cout << "CHECK1" << std::endl;
     std::vector< std::vector <double> > &temp = rmat -> getMat();
     std::size_t x = 0, y = 0;
     double* pivot = &temp[x][y]; //sets the pivot 
@@ -197,22 +195,16 @@ matrix* ref(matrix* mat){ //makes a copy of a matrix in reduced row echelon form
     bool begin = 0;
 
     while(x < rmat->getM() && y < rmat -> getN()){
-        //std::cout << "CHECK2" << std::endl;
-        //std::cout << "x = " << x << " y = " << y << std::endl;
-        //rmat -> dispMat();
         if(iszerocol(rmat, c)){
-            //std::cout << "CHECK2" << std::endl;
-            //std::cout << "x = " << x << " y = " << y << std::endl;
             c++;
             y++;
             continue;
         }
 
         else if (begin == 0){ //we are at beginning, this step will be used to rowswap all of the rows to their proper place 
-            //std::cout << "CHECK3" << std::endl;
-            //std::cout << "x = " << x << " y = " << y << std::endl;
+
             for(std::size_t i = x; i < rmat -> getM(); i++){
-                if (std::abs(temp[i][y] - 0) > EPSILON){ //temp[i][y] != 0
+                if (std::abs(temp[i][y] - 0) > EPSILON){
                     begin = 1;
                     rmat -> rowswap(i+1, 1);
                     break;
@@ -226,17 +218,12 @@ matrix* ref(matrix* mat){ //makes a copy of a matrix in reduced row echelon form
 
 
             while(std::abs(temp[x][y] - 0) < EPSILON){ //finding leading value
-                //std::cout << "CHECK4" << std::endl;
-                //std::cout << "x = " << x << " y = " << y << std::endl;  
                 if (x == rmat -> getM() - 1) break; //we have encountered a zero row
                 x++;
             }
 
-            //std::cout << "CHECK5" << std::endl;
-            //std::cout << "x = " << x << " y = " << y << std::endl;
             pivot = &temp[x][y];
 
-            //std::cout << "CHECK6" << std::endl;
             for(std::size_t i = x + 1; i < rmat -> getM(); i++){ //for each row
   
                 if(std::abs(temp[i][y] - 0) < EPSILON) continue;
@@ -260,19 +247,12 @@ matrix* ref(matrix* mat){ //makes a copy of a matrix in reduced row echelon form
             //now we have finished converting the first column
             //Moving on to next row and column
 
-            //std::cout << "CHECK7" << std::endl;
-            //std::cout << "x = " << x << " y = " << y << std::endl;
-
             y++;
             x++;
             c++;
 
             if (x > rmat -> getM() - 1 || y > rmat -> getN() - 1) break; //we have encountered a zero row
 
-            /*std::cout << "CHECK8" << std::endl;
-            std::cout << "x = " << x << " y = " << y << std::endl;
-            std::cout << "M = " << rmat -> getM() << std::endl;
-            std::cout << "C = " << c << std::endl;*/
             for(std::size_t i = x; i < rmat -> getM(); i++){
 
                 if (std::abs(temp[i][y] - 0) > EPSILON){
@@ -281,7 +261,6 @@ matrix* ref(matrix* mat){ //makes a copy of a matrix in reduced row echelon form
                 }
 
             }
-            //if (x < m) pivot = &temp[x+1][y+1];
 
         }
 
@@ -389,4 +368,48 @@ std::size_t matrix::rank(){
 
 std::size_t matrix::nullity(){
     return n - this->rank();
+}
+
+matrix* matadd(matrix* a, matrix* b){
+
+    if (a -> getM() != b -> getM() || a -> getN() != b -> getN()){
+        std::cerr << "Error: matrices have different dimensions" << std::endl;
+        exit(-1);
+    }
+
+    matrix* c = new matrix(a -> getM(), a -> getN());
+
+    for (std::size_t i = 1; i <= a -> getM(); i++){
+        for (std::size_t j = 1; j <= a -> getN(); j++){
+            c -> matedit(a -> getVal(i, j) + b -> getVal(i, j), i, j);
+        }
+    }
+
+    return c;
+
+}
+
+matrix* matmult(matrix* a, matrix* b){
+
+    if (a -> getN() != b -> getM()){
+        std::cerr << "Error: The number of columns in the first matrix is not equal to the number of rows in the second matrix. Multiplication of the two matrices is impossible" << std::endl;
+        exit(-1);
+    }
+
+    matrix* c = new matrix(a -> getM(), b -> getN());
+
+    for (std::size_t i = 1; i <= a -> getM(); i++){
+        for (std::size_t j = 1; j <= b -> getN(); j++){
+
+            double total = 0;
+            for(std::size_t k = 1; k <= a -> getN(); k++){
+                total += (a -> getVal(i, k) * b -> getVal(k, j));
+            }
+            c -> matedit(total, i, j);
+
+        }
+    }
+
+    return c;
+
 }

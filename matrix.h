@@ -13,8 +13,8 @@ class matrix{ //This will be a 1-based matrix (the index of the 1st element of t
 
     public:
         matrix(size_t m, size_t n); matrix(size_t n);
-        size_t getM(); //gets m aka number of rows
-        size_t getN(); //get n aka number of columns
+        size_t getM(); //returns number of rows
+        size_t getN(); //returns number of columns
         std::vector< std::vector<double> >& getMat(); //returns a reference to the 2D vector
         double getVal(size_t row, size_t col); //retrives value from the specified row and column
         void matedit(double val, size_t row, size_t col); //edits at the specified row and column with the value
@@ -32,6 +32,8 @@ class matrix{ //This will be a 1-based matrix (the index of the 1st element of t
 
 matrix* ref(matrix* mat); //returns a pointer to a row echelon form of the specified matrix
 matrix* rref(matrix* mat); //returns a pointer to the reduced row echelon form of the specified matrix
+matrix* matadd(matrix* a, matrix* b);
+matrix* matmult(matrix* a, matrix* b);
 
 
 

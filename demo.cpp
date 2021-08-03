@@ -68,6 +68,90 @@ int main(){
     //Finding Determinant of matrix
     std::cout << "Det is: " << mat -> findDet() << std::endl;
 
+    //Multiplying 2 matrices
+
+    matrix* a = new matrix(3, 3);
+    matrix* b = new matrix(3, 3);
+    matrix* x = new matrix(3, 4);
+
+    a -> matedit(1, 1, 1); 
+    a -> matedit(4, 1, 3); 
+    a -> matedit(2, 1, 2); 
+    a -> matedit(5, 2, 1);
+
+    b -> matedit(6, 1, 1); 
+    b -> matedit(2, 2, 3); 
+    b -> matedit(1, 1, 2); 
+    b -> matedit(8, 2, 1);
+    b -> matedit(8, 3, 3);
+    b -> matedit(8, 3, 1);
+
+    x -> matedit(1, 1, 1); 
+    x -> matedit(2, 2, 3); 
+    x -> matedit(4, 1, 2); 
+    x -> matedit(8, 2, 1);
+    x -> matedit(7, 3, 3);
+    x -> matedit(19, 3, 1);
+    x -> matedit(2, 3, 4);
+    x -> matedit(5, 1, 4);
+    x -> matedit(8, 2, 4);
+
+    std::cout << "Demonstrating adding two matrices" << std::endl;
+
+    std::cout << "Matrix a: " << std::endl;
+    a -> dispMat();
+
+    std::cout << "Matrix b: " << std::endl;
+    b -> dispMat();
+
+    std::cout << "Matrix x: " << std::endl;
+    x -> dispMat();
+
+    std::cout << "a+b: " << std::endl;
+    matrix* c = matadd(a, b);
+
+    c -> dispMat();
+    delete c;
+
+    std::cout << "a*b: " << std::endl;
+    c = matmult(a, b);
+
+    c -> dispMat();
+    delete c;
+
+    std::cout << "a*x: " << std::endl;
+    c = matmult(a, x);
+
+    c -> dispMat();
+    delete c;
+
+    matrix* d = new matrix(1, 4);
+    matrix* e = new matrix(4, 1);
+
+    d -> matedit(3, 1, 1);
+    d -> matedit(4, 1, 2);
+    d -> matedit(5, 1, 3);
+    d -> matedit(6, 1, 4);
+
+    e -> matedit(1, 1, 1);
+    e -> matedit(2, 2, 1);
+    e -> matedit(3, 3, 1);
+    e -> matedit(4, 4, 1);
+
+    std::cout << "Matrix d: " << std::endl;
+    d -> dispMat();
+
+    std::cout << "Matrix e: " << std::endl;
+    e -> dispMat();
+
+
+    std::cout << "d * e: " << std::endl;
+    c = matmult(d, e);
+    c -> dispMat();
+    delete c;
+
+
+
     //clearing matrix from memory
     delete mat;
     delete mat2;
