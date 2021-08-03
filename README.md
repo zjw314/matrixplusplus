@@ -1,6 +1,6 @@
 # matrixplusplus
 
-matrixplusplus is a matrix library written in C++. Matrices have 1 based indexing and values are stored as doubles.
+matrixplusplus is a 2D matrix library written in C++. Matrices have 1 based indexing and values are stored as doubles.
 
 Functionalities include:
 
